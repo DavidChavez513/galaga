@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
+import java.util.Random;
 
 
 public class Main extends JFrame implements KeyListener{
@@ -11,25 +12,25 @@ public class Main extends JFrame implements KeyListener{
 	 */
 
 	private Player player1;
-	private Dashboard mainView;
+	//private Dashboard mainView;
+
+	private final String PATH_BACKGROUND = "~/assets/layout-Galaga.png";
 
 
 	public void initScreen() {
-		setSize(1300, 800);
+		setSize(800, 800);
 		setTitle("GALAGA BY DavidChavez513");
 		setVisible(true);
 		setLayout(null);
-		this.mainView = new Dashboard();
-		this.add(mainView);
 		this.addKeyListener(this);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.player1 = new Player(35, 150, 64, 96, 20, 100, 3);
+		this.player1 = new Player(35, 150, 64, 96, 20, 100, 3, this);
 		this.getContentPane().setBackground(Color.BLACK);
 		
-		//this.add(player1.printSprite());
-		
+		this.add(player1.printSprite());
 
+		
 	}
 
 	public static void main(String[] args) {
@@ -38,6 +39,15 @@ public class Main extends JFrame implements KeyListener{
 				new Main().initScreen();
 			}
 		});
+	}
+
+	public void paintEnemy() {
+		Random random = new Random();
+		int x = random.nextInt(getWidth() - 64); // generate random x coordinate within the width of the frame
+		int y = random.nextInt(getHeight() - 96); // generate random y coordinate within the height of the frame
+		Enemy enemy1 = new Enemy(x, y, 64, 96, 20, 100, 3, this);
+		this.add(enemy1.printSprite());
+		enemy1.start();
 	}
 
 	@Override
@@ -51,6 +61,7 @@ public class Main extends JFrame implements KeyListener{
 		if (e.getKeyChar() == 'd') player1.moveRight();
 		if (e.getKeyChar() == 'w') player1.moveUp();
 		if (e.getKeyChar() == 's') player1.moveDown();
+		if (e.getKeyChar() == 'e') player1.shoot();
 
 		player1.calculateLimits();
 	}

@@ -1,4 +1,5 @@
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 
@@ -12,11 +13,12 @@ public class Player {
 	private int score;
 	private int lives;
 	private boolean isDead;
+	private JFrame gamePanel;
 
 	
 
 
-	public Player(int x, int y, int width, int height, int speed, int health, int lives) {
+	public Player(int x, int y, int width, int height, int speed, int health, int lives, JFrame gamePanel) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -27,6 +29,7 @@ public class Player {
 		this.score = 0;
 		this.isDead = false;
 		this.hitBox = new JLabel();
+		this.gamePanel = gamePanel;
 	}
 	
 
@@ -83,6 +86,15 @@ public class Player {
 				this.isDead = true;
 			}
 		}
+	}
+
+	public void shoot() {
+		Bullet bullet = new Bullet(getX(), getY(), 1);
+		
+		gamePanel.add(bullet.printSprite());
+		bullet.start();
+
+		// Add code to handle the bullet, such as adding it to a list or updating its position
 	}
 
 	public void calculateLimits() {

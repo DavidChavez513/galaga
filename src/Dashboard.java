@@ -1,26 +1,26 @@
-import java.awt.Image;
-import java.io.File;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
-import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+/**
+ * Dashboard
+ */
+public class Dashboard extends JPanel {
 
+	private ImageIcon background;
 
-public class Dashboard extends JPanel{
-	private Image backgroundImage;
+	public Dashboard(String imagePath) {
+		this.background = new ImageIcon(imagePath);
+	}
+	
 
-    public Dashboard() {
-        try {
-            this.backgroundImage = ImageIO.read(new File("../assets/layout-Galaga.png"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    protected void paintComponent(java.awt.Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(backgroundImage, 0, 0,this.getWidth(), this.getHeight(), this);
-    }
+	@Override
+	public void paintComponents(Graphics g) {
+		// TODO Auto-generated method stub
+		super.paintComponents(g);
+		g.drawImage(background.getImage(), ALLBITS, ABORT, getFocusCycleRootAncestor());
+	}
 
 }
